@@ -174,15 +174,15 @@ public class ShipServiceImpl implements ShipService{
                 }
 
                 if (after == null){
-                    return criteriaBuilder.lessThanOrEqualTo(root.get("profDate"),
+                    return criteriaBuilder.lessThanOrEqualTo(root.get("prodDate"),
                             new Date(before));
                 }
                 if (before == null){
-                    return criteriaBuilder.greaterThanOrEqualTo(root.get("profDate"),
-                            new Date(before));
+                    return criteriaBuilder.greaterThanOrEqualTo(root.get("prodDate"),
+                            new Date(after));
                 }
 
-                return criteriaBuilder.between(root.get("profDate"),
+                return criteriaBuilder.between(root.get("prodDate"),
                         new Date(after),
                         new Date(before)); //TODO
             }
@@ -211,13 +211,13 @@ public class ShipServiceImpl implements ShipService{
                 }
 
                 if (min == null){
-                    return criteriaBuilder.lessThanOrEqualTo(root.get("profDate"), min);
+                    return criteriaBuilder.lessThanOrEqualTo(root.get("speed"), max);
                 }
                 if (max == null){
-                    return criteriaBuilder.greaterThanOrEqualTo(root.get("profDate"), max);
+                    return criteriaBuilder.greaterThanOrEqualTo(root.get("speed"), min);
                 }
 
-                return criteriaBuilder.between(root.get("profDate"), min, max);
+                return criteriaBuilder.between(root.get("speed"), min, max);
             }
         };
     }
@@ -232,13 +232,13 @@ public class ShipServiceImpl implements ShipService{
                 }
 
                 if (min == null){
-                    return criteriaBuilder.lessThanOrEqualTo(root.get("profDate"), min);
+                    return criteriaBuilder.lessThanOrEqualTo(root.get("crewSize"), max);
                 }
                 if (max == null){
-                    return criteriaBuilder.greaterThanOrEqualTo(root.get("profDate"), max);
+                    return criteriaBuilder.greaterThanOrEqualTo(root.get("crewSize"), min);
                 }
 
-                return criteriaBuilder.between(root.get("profDate"), min, max);
+                return criteriaBuilder.between(root.get("crewSize"), min, max);
             }
         };
     }
@@ -253,13 +253,13 @@ public class ShipServiceImpl implements ShipService{
                 }
 
                 if (min == null){
-                    return criteriaBuilder.lessThanOrEqualTo(root.get("profDate"), min);
+                    return criteriaBuilder.lessThanOrEqualTo(root.get("rating"), max);
                 }
                 if (max == null){
-                    return criteriaBuilder.greaterThanOrEqualTo(root.get("profDate"), max);
+                    return criteriaBuilder.greaterThanOrEqualTo(root.get("rating"), min);
                 }
 
-                return criteriaBuilder.between(root.get("profDate"), min, max);
+                return criteriaBuilder.between(root.get("rating"), min, max);
             }
         };
     }
@@ -347,6 +347,20 @@ public class ShipServiceImpl implements ShipService{
     private void shipTypeNullValidator(Ship ship) {
         if (ship.getShipType() == null){
             throw new BadRequestException("ProdDate is NULL");
+        }
+    }
+
+    public Long idChecker(String id) {
+        if(id == null || id.equals("")){
+            throw new BadRequestException("ID is not a number");
+        }
+
+        try {
+            long idLong = Long.parseLong(id);
+            if(idLong <= 0) throw new BadRequestException("ID is less then or equal zero");
+            return idLong;
+        } catch (NumberFormatException e) {
+            throw new  BadRequestException("ID is not a number");
         }
     }
 }

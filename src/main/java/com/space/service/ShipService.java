@@ -27,6 +27,8 @@ public interface ShipService {
     Specification<Ship> crewSizeFilter(Integer min, Integer max);
     Specification<Ship> ratingFilter(Double min, Double max);
 
+    Long idChecker(String id);
+
 
 
 }
