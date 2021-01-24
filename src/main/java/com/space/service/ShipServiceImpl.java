@@ -34,6 +34,10 @@ public class ShipServiceImpl implements ShipService{
     @Override
     public Ship createShip(Ship ship) {
         paramsNullValidator(ship);
+
+        ship.setName(ship.getName().trim());
+        ship.setPlanet(ship.getPlanet().trim());
+
         paramsValidator(ship);
 
         if(ship.getUsed() == null){
@@ -55,10 +59,12 @@ public class ShipServiceImpl implements ShipService{
         Ship changedShip = repository.findById(id).get();
 
         if(ship.getName() != null) {
+            ship.setName(ship.getName().trim());
             nameValidator(ship);
             changedShip.setName(ship.getName());
         }
         if(ship.getPlanet() != null) {
+            ship.setPlanet(ship.getPlanet().trim());
             planetValidator(ship);
             changedShip.setPlanet(ship.getPlanet());
         }
@@ -136,8 +142,8 @@ public class ShipServiceImpl implements ShipService{
         return new Specification<Ship>() {
             @Override
             public Predicate toPredicate(Root<Ship> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                if (name == null) return null;
-                return criteriaBuilder.like(root.get("name"), "%" + name +"%");
+                if (name == null || name.trim().equals("")) return null;
+                return criteriaBuilder.like(root.get("name"), "%" + name.trim() +"%");
             }
         };
     }
@@ -147,8 +153,8 @@ public class ShipServiceImpl implements ShipService{
         return new Specification<Ship>() {
             @Override
             public Predicate toPredicate(Root<Ship> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                if (name == null) return null;
-                return criteriaBuilder.like(root.get("planet"), "%" + name +"%");
+                if (name == null || name.trim().equals("")) return null;
+                return criteriaBuilder.like(root.get("planet"), "%" + name.trim() +"%");
             }
         };
     }
