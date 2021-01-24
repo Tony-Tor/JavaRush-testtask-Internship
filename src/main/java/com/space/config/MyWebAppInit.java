@@ -6,7 +6,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 public class MyWebAppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
-
+    
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);

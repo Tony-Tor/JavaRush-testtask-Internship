@@ -15,4 +15,5 @@ public enum ShipOrder {
     public String getFieldName() {
         return fieldName;
     }
+
 }

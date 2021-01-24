@@ -22,7 +22,6 @@ import java.util.List;
 @ComponentScan("com.space.controller")
 public class WebConfig implements WebMvcConfigurer {
 
-
     @Bean
     public ViewResolver internalResourceViewResolver() {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
